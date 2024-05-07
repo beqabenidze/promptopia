@@ -1,11 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-
+import { useSession } from "next-auth/react";
 import PromptCard from "./PromptCard";
 
 const PromptCardList = ({ data, handleTagClick }) => {
-  console.log(data);
   return (
     <div className="mt-16 prompt_layout">
       {data.map((post) => (
@@ -21,6 +20,7 @@ const PromptCardList = ({ data, handleTagClick }) => {
 
 const Feed = () => {
   const [allPosts, setAllPosts] = useState([]);
+  const { data: session } = useSession();
 
   // Search states
   const [searchText, setSearchText] = useState("");
@@ -30,7 +30,9 @@ const Feed = () => {
   const fetchPosts = async () => {
     const response = await fetch("/api/prompt");
     const data = await response.json();
-
+    // if (session?.user) {
+    //   setAllPosts(data);
+    // }
     setAllPosts(data);
   };
 
@@ -42,7 +44,7 @@ const Feed = () => {
     const regex = new RegExp(searchtext, "i"); // 'i' flag for case-insensitive search
     return allPosts.filter(
       (item) =>
-        regex.test(item.creator.username) ||
+        regex.test(item.creator?.username) ||
         regex.test(item.tag) ||
         regex.test(item.prompt)
     );

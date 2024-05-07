@@ -18,6 +18,8 @@ const MyProfile = () => {
       const data = await response.json();
 
       setMyPosts(data);
+      // console.log(data);
+      // console.log(session?.user.id);
     };
 
     if (session?.user.id) fetchPosts();
@@ -41,6 +43,7 @@ const MyProfile = () => {
         const filteredPosts = myPosts.filter((item) => item._id !== post._id);
 
         setMyPosts(filteredPosts);
+        console.log("qefqegq");
       } catch (error) {
         console.log(error);
       }
