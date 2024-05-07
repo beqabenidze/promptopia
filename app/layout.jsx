@@ -9,6 +9,7 @@ export const metadata = {
 };
 const RootLayout = ({ children }) => (
   <html lang="en">
+    <link rel="icon" href="/assets/images/logo.svg" />
     <body>
       <Provider>
         <div className="main">
